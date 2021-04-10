@@ -11,30 +11,43 @@ class App extends Component {
       students: [],
       evaluations: [],
       groups: [],
+      github: [],
     };
   }
   componentDidMount() {
-    this.refreshData();
+    this.refreshData()
+      .then(() =>
+        this.loadCommits(this.state.students[0], this.state.groups[0])
+      )
+      .then(() => console.log(this.state.github));
+  }
+  loadCommits(student, group) {
+    return axios
+      .get(
+        "https://api.github.com/repos/" +
+          student.github +
+          "/" +
+          group.githubRepo +
+          "/commits"
+      )
+      .then((githubs) => this.setState({ github: githubs }));
   }
 
   refreshData = () => {
-    axios
+    var students = axios
       .get("/evaluat/users/")
       .then((res) => this.setState({ students: res.data }))
       .catch((err) => console.log(err));
     console.log(this.students);
-    axios
+    var groups = axios
       .get("/evaluat/groups/")
       .then((res) => this.setState({ groups: res.data }))
       .catch((err) => console.log(err));
-    axios
+    var evaluations = axios
       .get("/evaluat/evaluations/")
       .then((res) => this.setState({ evaluations: res.data }))
       .catch((err) => console.log(err));
-    axios
-      .get("/evaluat/users/id")
-      .then((res) => this.setState({ evaluations: res.data }))
-      .catch((err) => console.log(err));
+    return Promise.all([students, groups, evaluations]);
   };
 
   renderStudents = () => {
@@ -63,7 +76,7 @@ class App extends Component {
         <li class="list-group-item">Evaluations</li>
         {this.state.evaluations.map((evaluation) => (
           <li class="list-group-item">
-            {evaluation.evaluator.name} -> {evaluation.evaluatee.name}
+            {evaluation.evaluator.name} -> {evaluation.evaluatee}
           </li>
         ))}
       </ul>
@@ -72,7 +85,7 @@ class App extends Component {
 
   render() {
     return (
-      <div class="container">
+      <div class="container" className="p-0">
         <div class="row">
           <div class="col-sm">
             <div>{this.renderStudents()}</div>

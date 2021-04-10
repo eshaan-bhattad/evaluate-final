@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import {
-} from "reactstrap";
+import {} from "reactstrap";
 
 export default class StudentIn extends Component {
   render() {
     return (
       <div class="jumbotron bg-white rounded-0 my-0 py-0 mb-n4">
-        <div class="container">
+        <div class="container" className="p-0">
           <div class="row align-items-center">
             <div class="col-12">
               <div class="row">

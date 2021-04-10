@@ -10,8 +10,8 @@ import StudentInstructorJumbotron from "./components/StudentInstructorJumbotron"
 ReactDOM.render(
   <React.StrictMode>
     <Header />
-    <StudentInstructorJumbotron />
     <App />
+    <StudentInstructorJumbotron />
   </React.StrictMode>,
   document.getElementById("root")
 );
