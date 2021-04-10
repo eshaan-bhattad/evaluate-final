@@ -10,7 +10,7 @@ class User(models.Model):
     linkedin = models.CharField(max_length=100)
     github = models.CharField(max_length=100)
     groups = models.ManyToManyField(
-        'evaluat.Evaluation', related_name='evaluator_evaluatee', blank=True)
+        'evaluat.Group', related_name='group_user', blank=True)
 
     def __str__(self):
         return self.name
