@@ -1,90 +1,42 @@
 import logo from "./logo.svg";
 import "./App.css";
+import axios from "axios";
 import React, { Component } from "react";
-
-const evals = [
-  {
-    evaluator: 1,
-    evaluatee: 2,
-    accountability: 4,
-    commitment: 3,
-    conflict: 4,
-    trust: 4,
-    results: 4,
-    comments: "Cool kid",
-  },
-  {
-    evaluator: 3,
-    evaluatee: 1,
-    accountability: 5,
-    commitment: 5,
-    conflict: 5,
-    trust: 5,
-    results: 5,
-    comments: "Coool dude",
-  },
-];
-
-const users = [
-  {
-    name: "Eshaan Bhattad",
-    email: "ebhattad@gmail.com",
-    number: "8478509185",
-    linkedin: "https://www.linkedin.com/in/eshaan-bhattad/",
-    github: "https://github.com/eshaan-bhattad",
-    groups: [],
-  },
-  {
-    name: "Sathvik Daaram",
-    email: "sdaaram2@illinois.edu",
-    number: "6099371253",
-    linkedin: "https://www.linkedin.com/in/sathvik-daaram/",
-    github: "https://github.com/sdaaram",
-    groups: [],
-  },
-  {
-    name: "Pratyush Tulsian",
-    email: "tulsian3@illinois.edu",
-    number: "6099203116",
-    linkedin: "https://www.linkedin.com/in/pratyush-tulsian/",
-    github: "https://github.com/tulsian",
-    groups: [1],
-  },
-];
-
-const group = [
-  {
-    groupname: "212EAST",
-    students: [1, 2],
-    githubRepo: "https://github.com/eshaan-bhattad/evaluate-final",
-    owner: 1,
-    evaluations: [1],
-  },
-];
+import Header from "./components/Header.js";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      students: users,
-      evaluations: evals,
-      groups: group,
+      students: [],
+      evaluations: [],
+      groups: [],
     };
   }
-  nameFromId = (id) => {
-    var apiUrl = "http://127.0.0.1:8000/evaluat/users/" + id;
-    fetch(apiUrl)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        // Work with JSON data here
-        console.log(data["name"]);
-      })
-      .catch((err) => {
-        return;
-      });
+  componentDidMount() {
+    this.refreshData();
+  }
+
+  refreshData = () => {
+    axios
+      .get("/evaluat/users/")
+      .then((res) => this.setState({ students: res.data }))
+      .catch((err) => console.log(err));
+    console.log(this.students);
+    axios
+      .get("/evaluat/groups/")
+      .then((res) => this.setState({ groups: res.data }))
+      .catch((err) => console.log(err));
+    axios
+      .get("/evaluat/evaluations/")
+      .then((res) => this.setState({ evaluations: res.data }))
+      .catch((err) => console.log(err));
+    axios
+      .get("/evaluat/users/id")
+      .then((res) => this.setState({ evaluations: res.data }))
+      .catch((err) => console.log(err));
   };
+
   renderStudents = () => {
     return (
       <ul className="list-group">
@@ -111,7 +63,7 @@ class App extends Component {
         <li class="list-group-item">Evaluations</li>
         {this.state.evaluations.map((evaluation) => (
           <li class="list-group-item">
-            {this.nameFromId(evaluation.evaluator)} -> {evaluation.evaluatee}
+            {evaluation.evaluator.name} -> {evaluation.evaluatee.name}
           </li>
         ))}
       </ul>

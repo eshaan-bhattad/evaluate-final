@@ -20,3 +20,4 @@ class EvaluationSerializer(serializers.ModelSerializer):
         model = Evaluation
         fields = ('evaluator', 'evaluatee', 'accountability',
                   'commitment', 'conflict', 'trust', 'results', 'comments')
+        depth = 2
