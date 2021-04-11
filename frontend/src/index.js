@@ -6,12 +6,15 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import Header from "./components/Header";
 import StudentInstructorJumbotron from "./components/StudentInstructorJumbotron";
+import RadarChart from "./components/RadarChart";
+import GroupOverview from "./components/ClassOverview";
 
 ReactDOM.render(
   <React.StrictMode>
     <Header />
-    <App />
     <StudentInstructorJumbotron />
+    <RadarChart />
+    <GroupOverview />
   </React.StrictMode>,
   document.getElementById("root")
 );
