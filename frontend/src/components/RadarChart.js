@@ -14,7 +14,7 @@ export default class RadarGraph extends Component {
             communication: "Communication",
             contribution: "Contribution",
             organization: "Organization",
-            handlingconflict: "Handling Conflict",
+            handlingconflict: "Arbitration",
           }}
           data={[
             // data
@@ -29,7 +29,7 @@ export default class RadarGraph extends Component {
               meta: { color: "#58FCEC" },
             },
           ]}
-          size={300}
+          size={400}
         />
       </div>
     );
