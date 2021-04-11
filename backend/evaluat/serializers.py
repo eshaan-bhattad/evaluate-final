@@ -13,6 +13,7 @@ class GroupSerializer(serializers.ModelSerializer):
         model = Group
         fields = ('groupname', 'students',
                   'githubRepo', 'owner', 'evaluations')
+        depth = 2
 
 
 class EvaluationSerializer(serializers.ModelSerializer):
